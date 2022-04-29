@@ -1,28 +1,42 @@
 public class Tile {
-    private static final TileStatus TILE_STATUS_DEFAULT = TileStatus.OCEAN;
-    private final int xCoordinate;
-    private final int yCoordinate;
-    private TileStatus tileStatus;
+    private static final TileState TILE_STATE_DEFAULT = TileState.OCEAN;
+    private final Coordinate coordinate;
+    private TileState tileState;
 
-    public Tile(int xCoordinate, int yCoordinate) {
-        this.xCoordinate = xCoordinate;
-        this.yCoordinate = yCoordinate;
-        this.tileStatus = TILE_STATUS_DEFAULT;
+
+    public Tile(Coordinate coordinate) {
+        this.coordinate = coordinate;
+        this.tileState = TILE_STATE_DEFAULT;
     }
 
-    public void setTileStatus(TileStatus tileStatus) {
-        this.tileStatus = tileStatus;
+    public void setTileStatus(TileState tileStatus) {
+        this.tileState = tileStatus;
     }
 
     public void placeShip() {
-        this.tileStatus = TileStatus.SHIP;
+        setTileState(TileState.SHIP);
     }
 
-    @Override
-    public String toString() {
-        return "Tile " +
-                "(" + xCoordinate +
-                ", " + yCoordinate +
-                ") " + tileStatus;
+    public TileState getTileState() {
+        return tileState;
+    }
+
+    public Coordinate getCoordinate() {
+        return coordinate;
+    }
+
+    private void setTileState(TileState state) {
+        if (this.tileState.isValidChange(state)) {
+            this.tileState = state;
+        }
+    }
+
+    public void printTile() {
+        switch (this.tileState){
+            case SHIP -> System.out.print("S  ");
+            case OCEAN -> System.out.print("O  ");
+            case HIT -> System.out.print("X  ");
+            case MISS -> System.out.println("0  ");
+        };
     }
 }

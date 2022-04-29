@@ -1,3 +1,5 @@
 public class Ship {
-    //  Each player get's
+    private ShipType type;
+    private boolean rotation; // 0 = horizontal , 1 = vertical
+
 }
